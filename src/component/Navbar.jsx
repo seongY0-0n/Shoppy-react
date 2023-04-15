@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
-import { login, logout, onUserStateChange } from "./../api/firebase";
 import User from "./User";
 import Button from "./ui/Button";
+import { useAuthContext } from "./context/AuthContext";
 
 export default function Navbar() {
-  const [user, setUser] = useState();
-  useEffect(() => {
-    onUserStateChange((user) => {
-      setUser(user);
-    });
-  }, []);
-
+  const { user, login, logout } = useAuthContext();
   return (
     <header className="flex justify-between border-b border-gray-300 p-3">
       <Link to="/" className="flex items-center text-4xl text-brand">
