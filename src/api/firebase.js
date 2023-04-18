@@ -44,7 +44,7 @@ async function adminUser(user) {
   return get(ref(database, "admins")).then((snapshot) => {
     if (snapshot.exists()) {
       const admins = snapshot.val();
-      const isAdmin = admins.includes(user.uid);
+      const isAdmin = admins.admins.includes(user.uid);
       return { ...user, isAdmin };
     }
     return user;
@@ -59,5 +59,14 @@ export async function addNewProduct(product, imageUrl) {
     price: parseInt(product.price),
     image: imageUrl,
     options: product.options.split(","),
+  });
+}
+
+export async function getProducts() {
+  return get(ref(database, "admins/products")).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
   });
 }
