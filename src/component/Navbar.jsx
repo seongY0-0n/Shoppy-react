@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
+
 import User from "./User";
 import Button from "./ui/Button";
-import { useAuthContext } from "./context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
+import CartStatus from "./CartStatus";
 
 export default function Navbar() {
   const { user, login, logout } = useAuthContext();
@@ -15,7 +17,11 @@ export default function Navbar() {
       </Link>
       <nav className="flex items-center gap-4 font-semibold">
         <Link to="/products">Products</Link>
-        {user && <Link to="/carts">Carts</Link>}
+        {user && (
+          <Link to="/carts" className="text-xl">
+            <CartStatus />
+          </Link>
+        )}
         {user && user.isAdmin && (
           <Link to="/products/new" className="text-xl">
             <BsFillPencilFill />

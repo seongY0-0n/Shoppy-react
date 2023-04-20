@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "./../component/ui/Button";
+import { useAuthContext } from "../context/AuthContext";
+import { addOrUpdateToCarts } from "../api/firebase";
 
 export default function ProductDetail() {
+  const { user } = useAuthContext();
   const {
     state: {
       product: { id, image, title, category, price, options, description },
@@ -13,7 +16,9 @@ export default function ProductDetail() {
     setSelected(e.target.value);
   };
   const handleClick = (e) => {
-    //장바구니에 추가
+    //firebase에 carts 등록
+    const product = { id, image, title, price, option: selected, quantity: 1 };
+    addOrUpdateToCarts(user.uid, product);
   };
   return (
     <>
